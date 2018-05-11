@@ -4,7 +4,8 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: null
+      search: null,
+      dictionary_exists: false
     };
   }
 
@@ -16,7 +17,10 @@ class Search extends React.Component {
 
   handleSearchClick = event => {
     console.log(this.state.search);
-    // we want to find the search results in the corpus.
+    // we want to find the search results in the corpus as the end goal.
+    /* We want it to be a basic SPIMI indexer, which means there is a 
+    dictionary already made of terms + a list of their document ids which
+    we will search here. */
   };
 
   render() {
@@ -27,7 +31,9 @@ class Search extends React.Component {
           value={this.state.search}
           onChange={this.changeSearch}
         />
-        <button class="btn btn-primary btn-sm" onClick={this.handleSearchClick}>Search!</button>
+        <button class="btn btn-primary btn-sm" onClick={this.handleSearchClick}>
+          Search!
+        </button>
       </div>
     );
   }
