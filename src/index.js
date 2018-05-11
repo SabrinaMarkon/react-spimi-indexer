@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import Corpus from "./Corpus";
+import Search from "./Search";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -9,8 +10,12 @@ const styles = {
 
 const App = () => (
   <div style={styles}>
+    <br />
     <h2>React/JavaScript SPIMI Indexer</h2>
-    <h3>Show corpus below for now:</h3>
+    <br />
+    <Search />
+    <br />
+    <h3>Show Corpus (temporary):</h3>
     <Corpus />
   </div>
 );
