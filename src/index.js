@@ -9,8 +9,9 @@ const styles = {
 
 const App = () => (
   <div style={styles}>
-    <Corpus />
     <h2>React/JavaScript SPIMI Indexer</h2>
+    <h3>Show corpus below for now:</h3>
+    <Corpus />
   </div>
 );
 

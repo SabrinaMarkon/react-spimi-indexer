@@ -1,11 +1,14 @@
 import React from "react";
-import { render } from "react-dom";
 import faker from "faker";
 
-const corpus = new Array(100).fill(true).map(index => ({
-  docid: index,
-  document: faker.random.words()
-}));
+const fakeSentence = () => {
+  return faker.random.words() + " " + faker.random.words();
+};
 
-render() => <h1>test</h1>
+/* Create random 'documents' (short 'sentences' of random English words) */
+const corpus = new Array(1000).fill(true).map(fakeSentence);
 
+/* see what this thing looks like for now */
+const corpusprint = JSON.stringify(corpus);
+
+export default () => <div>{corpusprint}</div>;
