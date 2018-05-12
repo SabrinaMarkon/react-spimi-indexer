@@ -1,7 +1,8 @@
 import React from "react";
+import { corpus } from "./Corpus";
 //import { buildDictionary } from "./buildDictionary";
 // or the below default if there is only ONE function in buildDictionary.
-// also it can be called anything - function in buildDictionary.js has no name so we 
+// also it can be called anything - function in buildDictionary.js has no name so we
 // can just pick one if we want to like import bd from "./buildDictionary" would work too.
 import buildDictionary from "./buildDictionary";
 
@@ -37,7 +38,11 @@ class Search extends React.Component {
       search: event.target.value
     });
     console.log(this.state.search);
-    buildDictionary();
+    /* If the dictionary doesn't exist yet, build it */
+    if (this.state.dictionary_exists === false) {
+      buildDictionary(corpus);
+    }
+    /* execute search */
   };
 
   render() {

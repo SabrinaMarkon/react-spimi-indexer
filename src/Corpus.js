@@ -12,3 +12,4 @@ const corpus = new Array(1000).fill(true).map(fakeSentence);
 const corpusprint = JSON.stringify(corpus);
 
 export default () => <div>{corpusprint}</div>;
+export { corpus };

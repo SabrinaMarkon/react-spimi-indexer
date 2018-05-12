@@ -15,8 +15,8 @@ Try to achieve linear complexity O(T)
 STORIES 
 1) it should check if the dictionary is true or false in the state. If it is false,
 we need to build it so searches can go through that not every single token of the
-corpus.
-2) It should go through the documents in the corpus and tokenize them
+corpus. CHECK
+2) It should go through the documents in the corpus and tokenize them. Each document is an array item.
 3) It should filter out stop words (not many in the weird random sentences though)
 4) It should filter out html tags if there are any (not in sample corpus right now)
 5) It should remove certain punctuation from tokens
