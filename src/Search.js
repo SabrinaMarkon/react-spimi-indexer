@@ -1,10 +1,15 @@
 import React from "react";
+//import { buildDictionary } from "./buildDictionary";
+// or the below default if there is only ONE function in buildDictionary.
+// also it can be called anything - function in buildDictionary.js has no name so we 
+// can just pick one if we want to like import bd from "./buildDictionary" would work too.
+import buildDictionary from "./buildDictionary";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: null,
+      search: "",
       dictionary_exists: false
     };
   }
@@ -32,6 +37,7 @@ class Search extends React.Component {
       search: event.target.value
     });
     console.log(this.state.search);
+    buildDictionary();
   };
 
   render() {
@@ -43,7 +49,10 @@ class Search extends React.Component {
           onChange={this.changeSearch}
           placeholder="Enter search term"
         />
-        <button class="btn btn-primary btn-sm" onClick={this.handleSearchClick}>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={this.handleSearchClick}
+        >
           Search!
         </button>
       </div>

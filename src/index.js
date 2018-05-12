@@ -8,7 +8,7 @@ const styles = {
   textAlign: "center"
 };
 
-/*
+/**
 So if our dictionary state is false, it doesn't exist so we have to build one.
 Try to achieve linear complexity O(T)
 
