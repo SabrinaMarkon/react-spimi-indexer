@@ -10,6 +10,7 @@ const styles = {
 
 /*
 So if our dictionary state is false, it doesn't exist so we have to build one.
+Try to achieve linear complexity O(T)
 
 STORIES 
 1) it should check if the dictionary is true or false in the state. If it is false,
@@ -45,7 +46,7 @@ ie.
 }
 9) Calculate the idf and tf-idf weight during #9 when we know the df and are already 
 adding to the correct term in the object so have access to the tf too.
-10) Oh there's going to be more.
+10) Oh there's going to be more. Cosine similarity, add new document...
 */
 
 const App = () => (

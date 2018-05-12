@@ -9,6 +9,14 @@ class Search extends React.Component {
     };
   }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.state.search > prevState.search) {
+  //     this.setState({
+  //       search: null
+  //     });
+  //   }
+  // }
+
   changeSearch = event => {
     this.setState({
       search: event.target.value
@@ -16,11 +24,14 @@ class Search extends React.Component {
   };
 
   handleSearchClick = event => {
-    console.log(this.state.search);
     // we want to find the search results in the corpus as the end goal.
     /* We want it to be a basic SPIMI indexer, which means there is a 
     dictionary already made of terms + a list of their document ids which
     we will search here. */
+    this.setState({
+      search: event.target.value
+    });
+    console.log(this.state.search);
   };
 
   render() {
@@ -30,6 +41,7 @@ class Search extends React.Component {
           type="text"
           value={this.state.search}
           onChange={this.changeSearch}
+          placeholder="Enter search term"
         />
         <button class="btn btn-primary btn-sm" onClick={this.handleSearchClick}>
           Search!
