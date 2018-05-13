@@ -17,9 +17,9 @@ STORIES
 we need to build it so searches can go through that not every single token of the
 corpus. CHECK
 2) It should go through the documents in the corpus and tokenize them. Each document is a string
-with space separators.
-3) It should filter out stop words (not many in the weird random sentences though)
-4) It should filter out html tags if there are any (not in sample corpus right now)
+with space separators. CHECK
+3) It should filter out stop words (not many in the weird random sentences though) CHECK
+4) It should filter out html tags if there are any (not in sample corpus right now) 
 5) It should remove certain punctuation from tokens
 6) It should store unique terms in a data structure along with the document id as a 
 term dictionary:

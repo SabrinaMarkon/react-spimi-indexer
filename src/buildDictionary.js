@@ -41,5 +41,15 @@ export default function(corpus) {
     }
   };
 
-  //console.log(tokenarray);
+  // test
+  tokenarray.push('<div style="color: red;">CATS</div>');
+  tokenarray.push('<p>SQUEEBZ</p>')
+
+  /* 3) REMOVE HTML TAGS FROM TOKENS: */
+  for (let i = 0; i < tokenarray.length; i++) {
+    tokenarray[i] = tokenarray[i].replace(/<{1}[^<>]{1,}>{1}/g, '');
+  }
+
+  
+console.log(tokenarray);
 }
