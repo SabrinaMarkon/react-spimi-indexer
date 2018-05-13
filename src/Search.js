@@ -41,6 +41,9 @@ class Search extends React.Component {
     /* If the dictionary doesn't exist yet, build it */
     if (this.state.dictionary_exists === false) {
       buildDictionary(corpus);
+      this.setState({
+        dictionary_exists: true
+      });
     }
     /* execute search */
   };
