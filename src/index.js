@@ -20,9 +20,9 @@ corpus. CHECK
 with space separators. CHECK
 3) It should filter out stop words (not many in the weird random sentences though) CHECK
 4) It should filter out html tags if there are any CHECK
-5) It should remove certain punctuation from tokens
+5) It should remove certain punctuation from tokens  CHECK
 6) It should store unique terms in a data structure along with the document id as a 
-term dictionary:
+term dictionary after removing all empty array items:
 {term: {docid, docid2...}, term2: {docid2, docid8...}}
 7) It should store the count of each unique term in the document so we know the term frequency
 tf for that document. ie. term1: count, term2: count, etc. maybe.

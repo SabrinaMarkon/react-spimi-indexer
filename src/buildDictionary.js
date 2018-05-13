@@ -40,10 +40,12 @@ export default function(corpus) {
       tokenarray[removeindexvalue] = '';
     }
   };
+  // combine stopword block with html tag removal block ?
 
   // test
   tokenarray.push('<div style="color: red;">CAT    \'\"S</div>');
-  tokenarray.push('(<p>SQU$^&E?E  B\'Z</p>')
+  tokenarray.push('(<p>SQU$^&E?E  B\'Z</p>');
+  tokenarray.push('');
 
   /* 3) REMOVE HTML TAGS (first replace), 
         PUNCTUATION EXCEPT - and ' (second replace,
@@ -55,6 +57,12 @@ export default function(corpus) {
                     .replace(/\s{2,}/g, '');
   }
 
+  /* 4) CREATE ARRAY OF UNIQUE TERMS BY REMOVING EMPTY TOKENS (EMPTY INDEXES) */
+  const termsarray = tokenarray.filter((token) => {
+    return token !== '';
+  });
   
 console.log(tokenarray);
+console.log('--------------------------------------------------------');
+console.log(termsarray);
 }
