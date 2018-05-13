@@ -42,12 +42,17 @@ export default function(corpus) {
   };
 
   // test
-  tokenarray.push('<div style="color: red;">CATS</div>');
-  tokenarray.push('<p>SQUEEBZ</p>')
+  tokenarray.push('<div style="color: red;">CAT    \'\"S</div>');
+  tokenarray.push('(<p>SQU$^&E?E  B\'Z</p>')
 
-  /* 3) REMOVE HTML TAGS FROM TOKENS: */
+  /* 3) REMOVE HTML TAGS (first replace), 
+        PUNCTUATION EXCEPT - and ' (second replace,
+        AND MULTIPLE SPACES (3rd replace) FROM TOKENS: */
   for (let i = 0; i < tokenarray.length; i++) {
-    tokenarray[i] = tokenarray[i].replace(/<{1}[^<>]{1,}>{1}/g, '');
+    tokenarray[i] = tokenarray[i]
+                    .replace(/<{1}[^<>]{1,}>{1}/g, '')
+                    .replace(/[.,?\/#!$%\^&\*;:{}=\_`~()"]/g, '')
+                    .replace(/\s{2,}/g, '');
   }
 
   
