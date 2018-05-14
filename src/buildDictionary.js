@@ -9,16 +9,25 @@ or */
 
 /* if we only are going to have one function in here: */
 export default function(corpus) {
-  /* 1) TOKENIZE:
-
-  Go through document collection (corpus string) and tokenize each document */
-  const tokenarray = corpus.split(" ");
-
-  /* Remove the last array index which is just a space leftover from the 
-  fakeSentence functions */
-  tokenarray.pop();
   
-  /* We now have an ARRAY of tokens */
+  /* convert back to object */
+  corpus = JSON.parse(corpus);
+
+  /* 1) TOKENIZE:
+  Go through document collection (corpus string) and tokenize each document.
+  We want to have a list of objects that each contain a document's ID and an
+  array of its tokens. */
+  const tokenarray = corpus.map((currElement, index) => {
+    let entry = {
+      docID: index,
+      tokens: currElement.document.split(' '),
+    }
+    return entry;
+  });
+
+console.log(tokenarray);
+  
+  /* We now have an ARRAY of docIDs and their tokens. */
 
   /* 2) REMOVE STOP WORDS FROM TOKENS: */
   const stopwords = ["a", "aboard", "about", "above", "across", "after", 
@@ -43,9 +52,9 @@ export default function(corpus) {
   // combine stopword block with html tag removal block ?
 
   // test
-  tokenarray.push('<div style="color: red;">CAT    \'\"S</div>');
-  tokenarray.push('(<p>SQU$^&E?E  B\'Z</p>');
-  tokenarray.push('');
+  // tokenarray.push('<div style="color: red;">CAT    \'\"S</div>');
+  // tokenarray.push('(<p>SQU$^&E?E  B\'Z</p>');
+  // tokenarray.push('');
 
   /* 3) REMOVE HTML TAGS (first replace), 
         PUNCTUATION EXCEPT - and ' (second replace,

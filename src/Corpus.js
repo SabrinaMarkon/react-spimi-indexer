@@ -11,8 +11,8 @@ let corpus = new Array(10).fill(true).map((currElement, index) => {
   return document;
 });
 
-/* stringify because React won't accept an object
-(ie. 'new Array...') as a child.. */
+/* stringify because React won't accept an object as a child:
+(ie. 'new Array...' above') */
 corpus = JSON.stringify(corpus);
 console.log(corpus);
 
