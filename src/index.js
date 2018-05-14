@@ -22,7 +22,12 @@ with space separators. CHECK
 4) It should filter out html tags if there are any CHECK
 5) It should remove certain punctuation from tokens  CHECK
 6) It should store unique terms in a data structure along with the document id as a 
-term dictionary after removing all empty array items:
+term dictionary after removing all empty array items: CHECK
+
+At this point, we have all the unique terms in an array, however what we really need
+is each term's list of document ids as well. So we are going to have to change these things to
+object structures.
+
 {term: {docid, docid2...}, term2: {docid2, docid8...}}
 7) It should store the count of each unique term in the document so we know the term frequency
 tf for that document. ie. term1: count, term2: count, etc. maybe.
