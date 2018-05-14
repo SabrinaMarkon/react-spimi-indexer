@@ -16,7 +16,8 @@ export default function(corpus) {
   /* 1) TOKENIZE:
   Go through document collection (corpus string) and tokenize each document.
   We want to have a list of objects that each contain a document's ID and an
-  array of its tokens. */
+  array of its tokens. If there are duplicate tokens in a document, we also
+  now have their raw term frequencies from each of those counts. */
   const tokenarray = corpus.map((currElement, index) => {
     let entry = {
       docID: index,
@@ -24,8 +25,6 @@ export default function(corpus) {
     }
     return entry;
   });
-
-console.log(tokenarray);
   
   /* We now have an ARRAY of docIDs and their tokens. */
 
@@ -41,15 +40,18 @@ console.log(tokenarray);
   "than", "that", "the", "their", "this", "through", "to", "toward", "under", 
   "underneath", "unlike", "until", "up", "upon", "with", "without", "yet"];
 
-  for (let i = 0; i < stopwords.length; i++) {
-    const removeindexvalue = tokenarray.indexOf(stopwords[i]);
-    if (removeindexvalue !== -1) {
-      //console.log(removeindexvalue + '\n');
-      // a stopword was found at this index in the tokenarray. Set to ''.
-      tokenarray[removeindexvalue] = '';
-    }
-  };
-  // combine stopword block with html tag removal block ?
+  for (let i = 0; i < tokenarray.length; i++) {
+    const eachTokenSubArray = tokenarray[i].tokens;
+    /* For each docID-tokens object, we need to see if any of the tokens
+    in the tokens array property are present in the stopwords array, and
+    remove them if they are, and also remove any blank tokens. */
+    const eachTokenFilteredArray = 
+    eachTokenSubArray.filter(item => (stopwords.indexOf(item) < 0 && item !== ''));
+    tokenarray[i].tokens = eachTokenFilteredArray;
+  }
+  console.log(tokenarray);
+
+  // combine stopword blocka   with html tag removal block ?
 
   // test
   // tokenarray.push('<div style="color: red;">CAT    \'\"S</div>');

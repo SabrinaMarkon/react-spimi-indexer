@@ -5,7 +5,8 @@ import faker from "faker";
 
 let corpus = new Array(10).fill(true).map((currElement, index) => {
   let document = {
-    document: faker.random.words() + " " + faker.random.words(),
+    // remove temporary stop words after testing.
+    document: faker.random.words() + " like " + faker.random.words() + ' the' + '   adfds     fdsfds    ' + ' blah',
     docID: index,
   }
   return document;
