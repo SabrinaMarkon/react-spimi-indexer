@@ -1,4 +1,3 @@
-import { corpus } from "./Corpus";
 
 /* Use named export:
 export const buildDictionary = () => {
@@ -9,7 +8,7 @@ or */
 
 /* if we only are going to have one function in here: */
 export default function(corpus) {
-  
+
   /* convert back to object */
   corpus = JSON.parse(corpus);
 
@@ -19,16 +18,19 @@ export default function(corpus) {
   array of its tokens. If there are duplicate tokens in a document, we also
   now have their raw term frequencies from each of those counts. */
   const tokenarray = corpus.map((currElement, index) => {
+    let tokens = currElement.document.split(' ');
     let entry = {
       docID: index,
-      tokens: currElement.document.split(' '),
+      tokens,
     }
     return entry;
   });
-  
+
+console.log(tokenarray);
+
   /* We now have an ARRAY of docIDs and their tokens. */
 
-  /* 2) REMOVE STOP WORDS FROM TOKENS: */
+  /* 2) REMOVE STOP WORDS, BLANK TOKENS, HTML TAGS, AND PUNCTUATION FROM TOKENS: */
   const stopwords = ["a", "aboard", "about", "above", "across", "after", 
   "against", "along", "an", "and", "another", "any", "around", "as", "at", 
   "before", "behind", "below", "beneath", "beside", "between", "beyond", 
@@ -44,36 +46,42 @@ export default function(corpus) {
     const eachTokenSubArray = tokenarray[i].tokens;
     /* For each docID-tokens object, we need to see if any of the tokens
     in the tokens array property are present in the stopwords array, and
-    remove them if they are, and also remove any blank tokens. */
+    remove them if they are, and also remove any blank tokens, html tags,
+    and punctuation except ' and -. */
+    //console.log(eachTokenSubArray);
+
     const eachTokenFilteredArray = 
-    eachTokenSubArray.filter(item => (stopwords.indexOf(item) < 0 && item !== ''));
-    tokenarray[i].tokens = eachTokenFilteredArray;
+    /* 3) REMOVE STOPWORDS AND BLANK TOKENS: */
+      eachTokenSubArray.filter(item => stopwords.indexOf(item) < 0)
+    /* 4) REMOVE HTML TAGS, PUNCTUATION, AND MULTIPLE SPACES */
+    .map(item => {
+      item = item
+        .replace(/<{1}[^<>]{1,}>{1}/g, '') // remove html tags.
+        .replace(/[.,?><@\/#!$%\^&\*;:{}=\_`~()"]/g, '') // remove punctuation.
+        .replace(/\s{2,}/g, ''); // remove multiple spaces.
+      return item;
+    });
+    const eachTokenFilteredArray2 = eachTokenFilteredArray.filter(function (e) { return e === 0 || e });
+    tokenarray[i].tokens = eachTokenFilteredArray2;  
   }
   console.log(tokenarray);
 
-  // combine stopword blocka   with html tag removal block ?
-
-  // test
-  // tokenarray.push('<div style="color: red;">CAT    \'\"S</div>');
-  // tokenarray.push('(<p>SQU$^&E?E  B\'Z</p>');
-  // tokenarray.push('');
 
   /* 3) REMOVE HTML TAGS (first replace), 
         PUNCTUATION EXCEPT - and ' (second replace,
         AND MULTIPLE SPACES (3rd replace) FROM TOKENS: */
-  for (let i = 0; i < tokenarray.length; i++) {
-    tokenarray[i] = tokenarray[i]
-                    .replace(/<{1}[^<>]{1,}>{1}/g, '')
-                    .replace(/[.,?\/#!$%\^&\*;:{}=\_`~()"]/g, '')
-                    .replace(/\s{2,}/g, '');
-  }
+  // for (let i = 0; i < tokenarray.length; i++) {
+  //   tokenarray[i] = tokenarray[i]
+  //                   .replace(/<{1}[^<>]{1,}>{1}/g, '')
+  //                   .replace(/[.,?\/#!$%\^&\*;:{}=\_`~()"]/g, '')
+  //                   .replace(/\s{2,}/g, '');
+  // }
 
   /* 4) CREATE ARRAY OF UNIQUE TERMS BY REMOVING EMPTY TOKENS (EMPTY INDEXES) */
-  const termsarray = tokenarray.filter((token) => {
-    return token !== '';
-  });
+  // const termsarray = tokenarray.filter((token) => {
+  //   return token !== '';
+  // });
   
-console.log(tokenarray);
 console.log('--------------------------------------------------------');
-console.log(termsarray);
+//console.log(termsarray);
 }
