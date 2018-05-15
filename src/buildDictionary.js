@@ -26,8 +26,6 @@ export default function(corpus) {
     return entry;
   });
 
-console.log(tokenarray);
-
   /* We now have an ARRAY of docIDs and their tokens. */
 
   /* 2) REMOVE STOP WORDS, BLANK TOKENS, HTML TAGS, AND PUNCTUATION FROM TOKENS: */
@@ -43,7 +41,9 @@ console.log(tokenarray);
   "underneath", "unlike", "until", "up", "upon", "with", "without", "yet"];
 
   for (let i = 0; i < tokenarray.length; i++) {
+    
     const eachTokenSubArray = tokenarray[i].tokens;
+
     /* For each docID-tokens object, we need to see if any of the tokens
     in the tokens array property are present in the stopwords array, and
     remove them if they are, and also remove any blank tokens, html tags,
@@ -61,27 +61,9 @@ console.log(tokenarray);
         .replace(/\s{2,}/g, ''); // remove multiple spaces.
       return item;
     });
-    const eachTokenFilteredArray2 = eachTokenFilteredArray.filter(function (e) { return e === 0 || e });
-    tokenarray[i].tokens = eachTokenFilteredArray2;  
+    
+    tokenarray[i].tokens = eachTokenFilteredArray.filter(function (e) { return e === 0 || e });
   }
+
   console.log(tokenarray);
-
-
-  /* 3) REMOVE HTML TAGS (first replace), 
-        PUNCTUATION EXCEPT - and ' (second replace,
-        AND MULTIPLE SPACES (3rd replace) FROM TOKENS: */
-  // for (let i = 0; i < tokenarray.length; i++) {
-  //   tokenarray[i] = tokenarray[i]
-  //                   .replace(/<{1}[^<>]{1,}>{1}/g, '')
-  //                   .replace(/[.,?\/#!$%\^&\*;:{}=\_`~()"]/g, '')
-  //                   .replace(/\s{2,}/g, '');
-  // }
-
-  /* 4) CREATE ARRAY OF UNIQUE TERMS BY REMOVING EMPTY TOKENS (EMPTY INDEXES) */
-  // const termsarray = tokenarray.filter((token) => {
-  //   return token !== '';
-  // });
-  
-console.log('--------------------------------------------------------');
-//console.log(termsarray);
 }
