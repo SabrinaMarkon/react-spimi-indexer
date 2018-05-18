@@ -39,8 +39,13 @@ export default function(corpus) {
   "than", "that", "the", "their", "this", "through", "to", "toward", "under", 
   "underneath", "unlike", "until", "up", "upon", "with", "without", "yet"];
 
-  /* make array to hold document IDs, their tokens, and frequencies in object: */
+  /* make array to hold document IDs, their tokens, unique terms, and raw term
+   frequencies in objects */
   let docsTokensAndTermFrequencies = [];
+
+  /* make array to hold unique terms, their docIDs, and raw document frequencies
+   in objects */
+  let termsDocIDsAndDocFrequencies = [];
 
   for (let i = 0; i < tokenarray.length; i++) {
     
@@ -73,15 +78,38 @@ export default function(corpus) {
     First, make object of each unique term's (token's) value and raw frequency.
     */
     let thisDocsTermsAndFrequencyObj = {};
-    for (let i = 0; i < thisDocsTokens.length; i++) {
-      if (thisDocsTermsAndFrequencyObj.hasOwnProperty(thisDocsTokens[i])) {
+    for (let j = 0; j < thisDocsTokens.length; j++) {
+      /* build this document's unique term list */
+      if (thisDocsTermsAndFrequencyObj.hasOwnProperty(thisDocsTokens[j])) {
         /* This term already exists in this document's term list, so just add 1 to its raw
         term frequency */
-        thisDocsTermsAndFrequencyObj[thisDocsTokens[i]] += 1;
+        thisDocsTermsAndFrequencyObj[thisDocsTokens[j]] += 1;
       } else {
         /* Add this term with raw term frequency of 1 (so far) because it isn't in this
         document's term list yet */
-        thisDocsTermsAndFrequencyObj[thisDocsTokens[i]] = 1;
+        thisDocsTermsAndFrequencyObj[thisDocsTokens[j]] = 1;
+      }
+
+      /* add this document's unique terms and its ID to the terms/docIDs/raw document
+      frequency (rawdf) array. If the term is already in the array, add 1 to its rawdf
+      count. If not, add it to the array with a rawdf count of 1 */
+      //if (termsDocIDsAndDocFrequencies.indexOf() > -1) {
+      if (termsDocIDsAndDocFrequencies.find(x => x.term === thisDocsTokens[j])) {
+        /* unique term is already in the array. Add this docID and add 1 to raw df */
+        termsDocIDsAndDocFrequencies.forEach(termobj => {
+          if (termobj.term === thisDocsTokens[j]) {
+            termobj.docIDs.push(i);
+            termobj.docs += 1;
+          }
+        });
+      } else {
+        /* need to add this term to the array. Add this docID and set rawdf = 1 */
+        let termobj = {
+          term: thisDocsTokens[j],
+          docIDs: [i],
+          docs: 1,
+        }
+        termsDocIDsAndDocFrequencies.push(termobj);
       }
     }
 
@@ -94,9 +122,9 @@ export default function(corpus) {
 
     docsTokensAndTermFrequencies.push(obj);
 
-    //aconsole.log(thisDocsTermsAndFrequencyObj);
+    //console.log(thisDocsTermsAndFrequencyObj);
 
   }
 
-  console.log(docsTokensAndTermFrequencies);
+  console.log(termsDocIDsAndDocFrequencies);
 }
