@@ -1,4 +1,3 @@
-
 /* Use named export:
 export const buildDictionary = () => {
   console.log("cats");
@@ -40,6 +39,9 @@ export default function(corpus) {
   "than", "that", "the", "their", "this", "through", "to", "toward", "under", 
   "underneath", "unlike", "until", "up", "upon", "with", "without", "yet"];
 
+  /* make array to hold document IDs, their tokens, and frequencies in object: */
+  let docsTokensAndTermFrequencies = [];
+
   for (let i = 0; i < tokenarray.length; i++) {
     
     const eachTokenSubArray = tokenarray[i].tokens;
@@ -63,8 +65,38 @@ export default function(corpus) {
       return item;
     });
     
-    tokenarray[i].tokens = eachTokenFilteredArray.filter(function (e) { return e === 0 || e });
+    let thisDocsTokens = tokenarray[i].tokens;
+    thisDocsTokens = eachTokenFilteredArray.filter(function (e) { return e === 0 || e });
+    
+    /* make an object with document ID, its tokens, and each token's raw term frequency, 
+    tf (not normalized)
+    First, make object of each unique term's (token's) value and raw frequency.
+    */
+    let thisDocsTermsAndFrequencyObj = {};
+    for (let i = 0; i < thisDocsTokens.length; i++) {
+      if (thisDocsTermsAndFrequencyObj.hasOwnProperty(thisDocsTokens[i])) {
+        /* This term already exists in this document's term list, so just add 1 to its raw
+        term frequency */
+        thisDocsTermsAndFrequencyObj[thisDocsTokens[i]] += 1;
+      } else {
+        /* Add this term with raw term frequency of 1 (so far) because it isn't in this
+        document's term list yet */
+        thisDocsTermsAndFrequencyObj[thisDocsTokens[i]] = 1;
+      }
+    }
+
+    /* the value in the terms key holds unique terms and their raw term frequencies (rawtf) */
+    const obj = {
+      docID: i,
+      tokens: thisDocsTokens,
+      terms: thisDocsTermsAndFrequencyObj,
+    }
+
+    docsTokensAndTermFrequencies.push(obj);
+
+    //aconsole.log(thisDocsTermsAndFrequencyObj);
+
   }
 
-  console.log(tokenarray);
+  console.log(docsTokensAndTermFrequencies);
 }

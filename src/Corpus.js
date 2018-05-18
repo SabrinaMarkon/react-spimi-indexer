@@ -9,7 +9,15 @@ let corpus = new Array(10).fill(true).map((currElement, index) => {
   let thisDocument = faker.random.words() + " like " +
     faker.random.words() + ' the' + '   adfds     fdsfds    ' +
     ' <div style="color: red;">CAT    \'\"S</div>' + '   ' +
-    'asdf?#@dd*-df\'asfs ' + '< p > SQU$ ^&E ? E  B\'Z</p>';
+    'asdf?#@dd*-df\'asfs ' + '< p > SQU$ ^&E ? E  B\'Z</p>' + 
+    ' BEAN' + // the 7 cat names here are to test that unique terms are counted correcty
+    ' NIGEL' +
+    ' SQUEEBZ'+ 
+    ' BEAN' +
+    ' BENJI' +
+    ' BEAN' +
+    ' SQUEEBZ' +
+    ' NIGEL';
 
   let document = {
     document: thisDocument,
