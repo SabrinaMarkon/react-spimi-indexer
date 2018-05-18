@@ -48,8 +48,6 @@ export default function(corpus) {
     in the tokens array property are present in the stopwords array, and
     remove them if they are, and also remove any blank tokens, html tags,
     and punctuation except ' and -. */
-    //console.log(eachTokenSubArray);
-
     const eachTokenFilteredArray = 
     /* 3) REMOVE STOPWORDS AND BLANK TOKENS: */
       eachTokenSubArray.filter(item => stopwords.indexOf(item) < 0)
@@ -59,6 +57,9 @@ export default function(corpus) {
         .replace(/<{1}[^<>]{1,}>{1}/g, '') // remove html tags.
         .replace(/[.,?><@\/#!$%\^&\*;:{}=\_`~()"]/g, '') // remove punctuation.
         .replace(/\s{2,}/g, ''); // remove multiple spaces.
+      if (item.length <= 2) { // remove items that are 2 or less characters.
+        item = '';
+      }
       return item;
     });
     

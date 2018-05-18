@@ -12,6 +12,8 @@ const styles = {
 So if our dictionary state is false, it doesn't exist so we have to build one.
 Try to achieve linear complexity O(T)
 
+Currently "bag of words" querying
+
 STORIES 
 1) it should check if the dictionary is true or false in the state. If it is false,
 we need to build it so searches can go through that not every single token of the
@@ -21,6 +23,7 @@ with space separators. CHECK
 3) It should filter out stop words (not many in the weird random sentences though) CHECK
 4) It should filter out html tags if there are any CHECK
 5) It should remove certain punctuation from tokens  CHECK
+5.5) It should remove tokens that are 2 or less characters CHECK
 6) It should store unique terms in a data structure along with the document id as a 
 term dictionary after removing all empty array items: CHECK
 
