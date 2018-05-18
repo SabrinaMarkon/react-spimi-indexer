@@ -95,11 +95,16 @@ export default function(corpus) {
       count. If not, add it to the array with a rawdf count of 1 */
       //if (termsDocIDsAndDocFrequencies.indexOf() > -1) {
       if (termsDocIDsAndDocFrequencies.find(x => x.term === thisDocsTokens[j])) {
-        /* unique term is already in the array. Add this docID and add 1 to raw df */
+        /* unique term is already in the array. Add this docID and add 1 to raw df 
+        IF this docID isn't already in the docIDs property! */
         termsDocIDsAndDocFrequencies.forEach(termobj => {
           if (termobj.term === thisDocsTokens[j]) {
-            termobj.docIDs.push(i);
-            termobj.docs += 1;
+            /* is this docID, i, already in the term object's docIDs property array? 
+            If so, add 1 to the document frequency and this docID to docIDs array */
+            if (termobj.docIDs.indexOf(i) === -1) {
+              termobj.docIDs.push(i);
+              termobj.docs += 1;
+            }
           }
         });
       } else {

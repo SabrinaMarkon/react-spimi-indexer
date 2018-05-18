@@ -35,9 +35,9 @@ object structures.
 7) It should store the count of each unique term in the document so we know the term frequency
 tf for that document. ie. term1: count, term2: count, etc. maybe. CHECK
 8) We need to count the number of docs for each term in the term dictionary ie.
-term: {docid, docid2} would have two docs, so has a document frequency df = 2
+term: {docid, docid2} would have two docs, so has a document frequency df = 2 CHECK
 Let's try to store this in the structure in #7 by turning the count value into an object tf
-and df instead?
+and df instead? 
 ie. 
 {
   term1: {
