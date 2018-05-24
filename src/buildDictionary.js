@@ -131,5 +131,12 @@ export default function(corpus) {
 
   }
 
+  // we have the raw term frequencies here:
+  console.log(docsTokensAndTermFrequencies);
+
+  // we have the raw doc frequencies here:
   console.log(termsDocIDsAndDocFrequencies);
+
+  /* we want to be able to compute the tf-idf */
+
 }
