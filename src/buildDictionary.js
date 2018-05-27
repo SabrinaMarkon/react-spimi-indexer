@@ -169,7 +169,10 @@ export default function(corpus) {
         document's term list yet */
         thisDocsTermsAndFrequencyObj[thisDocsTokens[j]] = 1;
       }
-      thisDocsTermsAndNormalizedFrequencyObj[thisDocsTokens[j]] = Math.log(
+      /* Compute the normalized term frequency for this term in this document.
+      Math.log in JavaScript is the natural log, e, so we need to use Math.log10
+      to use base 10 logarithm. */
+      thisDocsTermsAndNormalizedFrequencyObj[thisDocsTokens[j]] = Math.log10(
         1 + thisDocsTermsAndFrequencyObj[thisDocsTokens[j]]);
 
       /* add this document's unique terms and its ID to the terms/docIDs/raw document
