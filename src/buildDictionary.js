@@ -24,6 +24,9 @@ export default function(corpus) {
     return entry;
   });
 
+  /* get the number of documents, N, for the idf calculation later on */
+  const N = tokenarray.length;
+
   /* We now have an ARRAY of docIDs and their tokens. */
 
   /* 2) REMOVE STOP WORDS, BLANK TOKENS, HTML TAGS, AND PUNCTUATION FROM TOKENS: */
@@ -179,9 +182,7 @@ export default function(corpus) {
       frequency (rawdf) array. If the term is already in the array, add 1 to its rawdf
       count. If not, add it to the array with a rawdf count of 1 */
       //if (termsDocIDsAndDocFrequencies.indexOf() > -1) {
-      if (
-        termsDocIDsAndDocFrequencies.find(x => x.term === thisDocsTokens[j])
-      ) {
+      if (termsDocIDsAndDocFrequencies.find(x => x.term === thisDocsTokens[j])) {
         /* unique term is already in the array. Add this docID and add 1 to raw df 
         IF this docID isn't already in the docIDs property! */
         termsDocIDsAndDocFrequencies.forEach(termobj => {
@@ -191,6 +192,8 @@ export default function(corpus) {
             if (termobj.docIDs.indexOf(i) === -1) {
               termobj.docIDs.push(i);
               termobj.docs += 1;
+              /* N/termobj.docs calculates normalized document frequency N/df */
+              termobj.normalizeddf = N/termobj.docs;
             }
           }
         });
@@ -199,10 +202,13 @@ export default function(corpus) {
         let termobj = {
           term: thisDocsTokens[j],
           docIDs: [i],
-          docs: 1
+          docs: 1,
         };
         termsDocIDsAndDocFrequencies.push(termobj);
-      }
+        termobj.normalizeddf = N / termobj.docs;
+      } 
+      
+
     }
 
     /* the value in the terms key holds unique terms and their raw term frequencies (rawtf) */
@@ -225,6 +231,5 @@ export default function(corpus) {
   console.log(termsDocIDsAndDocFrequencies);
 
   /* we want to be able to compute the tf-idf */
-
-  /* for each term we need to compute the term frequency */
+  
 }
