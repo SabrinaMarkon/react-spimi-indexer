@@ -30,93 +30,15 @@ export default function(corpus) {
   /* We now have an ARRAY of docIDs and their tokens. */
 
   /* 2) REMOVE STOP WORDS, BLANK TOKENS, HTML TAGS, AND PUNCTUATION FROM TOKENS: */
-  const stopwords = [
-    "a",
-    "aboard",
-    "about",
-    "above",
-    "across",
-    "after",
-    "against",
-    "along",
-    "an",
-    "and",
-    "another",
-    "any",
-    "around",
-    "as",
-    "at",
-    "before",
-    "behind",
-    "below",
-    "beneath",
-    "beside",
-    "between",
-    "beyond",
-    "but",
-    "but",
-    "by",
-    "certain",
-    "down",
-    "during",
-    "each",
-    "every",
-    "except",
-    "following",
-    "for",
-    "for",
-    "from",
-    "her",
-    "his",
-    "in",
-    "inside",
-    "into",
-    "its",
-    "its",
-    "like",
-    "minus",
-    "minus",
-    "my",
-    "near",
-    "next",
-    "no",
-    "nor",
-    "of",
-    "off",
-    "on",
-    "onto",
-    "onto",
-    "opposite",
-    "or",
-    "our",
-    "out",
-    "outside",
-    "over",
-    "past",
-    "plus",
-    "round",
-    "since",
-    "since",
-    "so",
-    "some",
-    "than",
-    "that",
-    "the",
-    "their",
-    "this",
-    "through",
-    "to",
-    "toward",
-    "under",
-    "underneath",
-    "unlike",
-    "until",
-    "up",
-    "upon",
-    "with",
-    "without",
-    "yet"
-  ];
+  const stopwords = [ "a", "aboard", "about", "above", "across", "after", "against",
+   "along", "an", "and", "another", "any", "around", "as", "at", "before", "behind",
+    "below", "beneath", "beside", "between", "beyond", "but", "but", "by", "certain", 
+    "down", "during", "each", "every", "except", "following", "for", "for", "from", 
+    "her", "his", "in", "inside", "into", "its", "its", "like", "minus", "minus", 
+    "my", "near", "next", "no", "nor", "of", "off", "on", "onto", "onto", "opposite", 
+    "or", "our", "out", "outside", "over", "past", "plus", "round", "since", "since", 
+    "so", "some", "than", "that", "the", "their", "this", "through", "to", "toward", 
+    "under", "underneath", "unlike", "until", "up", "upon", "with", "without", "yet"];
 
   /* make array to hold document IDs, their tokens, unique terms, and raw term
    frequencies in objects */
@@ -194,6 +116,7 @@ export default function(corpus) {
               termobj.docs += 1;
               /* N/termobj.docs calculates normalized document frequency N/df */
               termobj.normalizeddf = N/termobj.docs;
+              termobj.idf = Math.log10(N / termobj.docs);
             }
           }
         });
@@ -206,6 +129,7 @@ export default function(corpus) {
         };
         termsDocIDsAndDocFrequencies.push(termobj);
         termobj.normalizeddf = N / termobj.docs;
+        termobj.idf = Math.log10(N / termobj.docs);
       } 
       
 
