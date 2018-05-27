@@ -164,16 +164,13 @@ export default function(corpus) {
         /* This term already exists in this document's term list, so just add 1 to its raw
         term frequency */
         thisDocsTermsAndFrequencyObj[thisDocsTokens[j]] += 1;
-        thisDocsTermsAndNormalizedFrequencyObj[thisDocsTokens[j]] = Math.log(
-          1 + thisDocsTermsAndFrequencyObj[thisDocsTokens[j]]
-        );
       } else {
         /* Add this term with raw term frequency of 1 (so far) because it isn't in this
         document's term list yet */
         thisDocsTermsAndFrequencyObj[thisDocsTokens[j]] = 1;
-        thisDocsTermsAndNormalizedFrequencyObj[thisDocsTokens[j]] = Math.log(
-          1 + thisDocsTermsAndFrequencyObj[thisDocsTokens[j]]);
       }
+      thisDocsTermsAndNormalizedFrequencyObj[thisDocsTokens[j]] = Math.log(
+        1 + thisDocsTermsAndFrequencyObj[thisDocsTokens[j]]);
 
       /* add this document's unique terms and its ID to the terms/docIDs/raw document
       frequency (rawdf) array. If the term is already in the array, add 1 to its rawdf
