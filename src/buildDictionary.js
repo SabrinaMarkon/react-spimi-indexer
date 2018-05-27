@@ -116,6 +116,7 @@ export default function(corpus) {
               termobj.docs += 1;
               /* N/termobj.docs calculates normalized document frequency N/df */
               termobj.normalizeddf = N/termobj.docs;
+              /* calculate the inverse document frequency, idf */
               termobj.idf = Math.log10(N / termobj.docs);
             }
           }
@@ -129,6 +130,7 @@ export default function(corpus) {
         };
         termsDocIDsAndDocFrequencies.push(termobj);
         termobj.normalizeddf = N / termobj.docs;
+        /* calculate the inverse document frequency, idf */
         termobj.idf = Math.log10(N / termobj.docs);
       } 
       
@@ -155,5 +157,31 @@ export default function(corpus) {
   console.log(termsDocIDsAndDocFrequencies);
 
   /* we want to be able to compute the tf-idf */
-  
+  /*
+0: Object
+term: "Producer"
+docIDs: Array[1]
+docs: 1
+normalizeddf: 10
+idf: 1
+
+0: Object
+docID: 0
+tokens: Array[18]
+terms: Object
+normalizedtf: Object
+
+1) Get each docID (there are 10 in this array)
+2) For each, we have its normalizedtf for each of its terms.
+3) For each of its terms, look it up in the other array and get its idf.
+4) calculate the tf-idf weight and add docID, term, and tf-idf to new object.
+
+SEARCH
+find entry in #4's array for a term that has the highest tf-idf for the #1 result, then #2 etc.
+If there is more than one word submitted in the search, do it for each.
+Add the tf-idfs together to get the final weights to rank the results.
+
+  */
+
+
 }
