@@ -6,7 +6,7 @@ export const buildDictionary = () => {
 or */
 
 /* if we only are going to have one function in here: */
-export default function(corpus) {
+export default function (corpus) {
   /* convert back to object */
   corpus = JSON.parse(corpus);
 
@@ -30,22 +30,17 @@ export default function(corpus) {
   /* We now have an ARRAY of docIDs and their tokens. */
 
   /* 2) REMOVE STOP WORDS, BLANK TOKENS, HTML TAGS, AND PUNCTUATION FROM TOKENS: */
-  const stopwords = [ "a", "aboard", "about", "above", "across", "after", "against",
-   "along", "an", "and", "another", "any", "around", "as", "at", "before", "behind",
-    "below", "beneath", "beside", "between", "beyond", "but", "but", "by", "certain", 
-    "down", "during", "each", "every", "except", "following", "for", "for", "from", 
-    "her", "his", "in", "inside", "into", "its", "its", "like", "minus", "minus", 
-    "my", "near", "next", "no", "nor", "of", "off", "on", "onto", "onto", "opposite", 
-    "or", "our", "out", "outside", "over", "past", "plus", "round", "since", "since", 
-    "so", "some", "than", "that", "the", "their", "this", "through", "to", "toward", 
+  const stopwords = ["a", "aboard", "about", "above", "across", "after", "against",
+    "along", "an", "and", "another", "any", "around", "as", "at", "before", "behind",
+    "below", "beneath", "beside", "between", "beyond", "but", "but", "by", "certain",
+    "down", "during", "each", "every", "except", "following", "for", "for", "from",
+    "her", "his", "in", "inside", "into", "its", "its", "like", "minus", "minus",
+    "my", "near", "next", "no", "nor", "of", "off", "on", "onto", "onto", "opposite",
+    "or", "our", "out", "outside", "over", "past", "plus", "round", "since", "since",
+    "so", "some", "than", "that", "the", "their", "this", "through", "to", "toward",
     "under", "underneath", "unlike", "until", "up", "upon", "with", "without", "yet"];
 
-  /* make array to hold document IDs, their tokens, unique terms, and raw term
-   frequencies in objects */
-  let docsTokensAndTermFrequencies = [];
-
-  /* make array to hold unique terms, their docIDs, and raw document frequencies
-   in objects */
+  /* make array to hold unique terms, their [docID,term_frequency_for_this_document] */
   let termsDocIDsAndDocFrequencies = [];
 
   /* Do for each document. N = tokenarray.length */
@@ -75,11 +70,10 @@ export default function(corpus) {
 
     /* thisDocsTokens is a list of all tokens for this document, including duplicates. */
     let thisDocsTokens = tokenarray[i].tokens;
-    thisDocsTokens = eachTokenFilteredArray.filter(function(e) {
+    thisDocsTokens = eachTokenFilteredArray.filter(function (e) {
       return e === 0 || e;
     });
-    
-    
+
     /* make an object with document ID, its tokens, and each token's raw term frequency, 
     tf (not normalized)
     First, make object of each unique term's (token's) value and raw frequency.
@@ -118,7 +112,7 @@ export default function(corpus) {
               termobj.docIDs.push(i);
               termobj.docs += 1;
               /* N/termobj.docs calculates normalized document frequency N/df */
-              termobj.normalizeddf = N/termobj.docs;
+              termobj.normalizeddf = N / termobj.docs;
               /* calculate the inverse document frequency, idf */
               termobj.idf = Math.log10(N / termobj.docs);
             }
@@ -135,8 +129,8 @@ export default function(corpus) {
         termobj.normalizeddf = N / termobj.docs;
         /* calculate the inverse document frequency, idf */
         termobj.idf = Math.log10(N / termobj.docs);
-      } 
-      
+      }
+
 
     }
 
