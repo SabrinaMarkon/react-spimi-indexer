@@ -6,7 +6,7 @@ export const buildDictionary = () => {
 or */
 
 /* if we only are going to have one function in here: */
-export default function (corpus) {
+export default function(corpus) {
   /* convert back to object */
   corpus = JSON.parse(corpus);
 
@@ -43,7 +43,7 @@ export default function (corpus) {
   /* make array to hold unique terms, their [docID,term_frequency_for_this_document] */
   let termsDocIDsAndDocFrequencies = [];
 
-  /* Do for each document. N = tokenarray.length */
+  /* Do for each document. N = tokenarray.length. i = which doc is this? */
   for (let i = 0; i < N; i++) {
     const eachTokenSubArray = tokenarray[i].tokens;
 
@@ -70,9 +70,35 @@ export default function (corpus) {
 
     /* thisDocsTokens is a list of all tokens for this document, including duplicates. */
     let thisDocsTokens = tokenarray[i].tokens;
-    thisDocsTokens = eachTokenFilteredArray.filter(function (e) {
-      return e === 0 || e;
-    });
+
+    console.log(thisDocsTokens);
+    // thisDocsTokens = eachTokenFilteredArray.filter(function (e) {
+    //   return e === 0 || e;
+    // });
+
+    /*
+    Stories:
+    1) Get each term from this document in a for loop.
+    2) Check if it is already in the main list.
+     2a) If YES, check if it is the SAME docID.
+      2aa) If YES, add 1 to the term frequency tf += 1 for the term and docID pair. 
+            Do NOT not add 1 or change the df.  CALC normalized tf,tf-idf
+      2bb) If we don't have this term/docID set, add it to the main list and set the tf = 1, df += 1, 
+            CALC normalized tf,normalized df,idf,tf-idf
+     2b) If the term is NOT yet in the main list AT ALL, add it and this docID, tf = 1, df = 1,
+         CALC normalized tf,df,idf,tf-idf
+    
+    */
+
+    let invertedIndex = []; // main list.
+    for (let j = 0; j < thisDocsTokens.length; j++) {
+      if (invertedIndex.indexOf(thisDocsTokens[j] === -1)) {
+        // the term hasn't been added to the main list yet.
+
+        let newelement = [thisDocsTokens[j]];
+          invertedIndex.push(newelement);
+      }
+    }
 
     /* make an object with document ID, its tokens, and each token's raw term frequency, 
     tf (not normalized)
@@ -95,13 +121,16 @@ export default function (corpus) {
       Math.log in JavaScript is the natural log, e, so we need to use Math.log10
       to use base 10 logarithm. */
       thisDocsTermsAndNormalizedFrequencyObj[thisDocsTokens[j]] = Math.log10(
-        1 + thisDocsTermsAndFrequencyObj[thisDocsTokens[j]]);
+        1 + thisDocsTermsAndFrequencyObj[thisDocsTokens[j]]
+      );
 
       /* add this document's unique terms and its ID to the terms/docIDs/raw document
       frequency (rawdf) array. If the term is already in the array, add 1 to its rawdf
       count. If not, add it to the array with a rawdf count of 1 */
       //if (termsDocIDsAndDocFrequencies.indexOf() > -1) {
-      if (termsDocIDsAndDocFrequencies.find(x => x.term === thisDocsTokens[j])) {
+      if (
+        termsDocIDsAndDocFrequencies.find(x => x.term === thisDocsTokens[j])
+      ) {
         /* unique term is already in the array. Add this docID and add 1 to raw df 
         IF this docID isn't already in the docIDs property! */
         termsDocIDsAndDocFrequencies.forEach(termobj => {
@@ -123,15 +152,13 @@ export default function (corpus) {
         let termobj = {
           term: thisDocsTokens[j],
           docIDs: [i],
-          docs: 1,
+          docs: 1
         };
         termsDocIDsAndDocFrequencies.push(termobj);
         termobj.normalizeddf = N / termobj.docs;
         /* calculate the inverse document frequency, idf */
         termobj.idf = Math.log10(N / termobj.docs);
       }
-
-
     }
 
     /* the value in the terms key holds unique terms and their raw term frequencies (rawtf) */
@@ -180,6 +207,4 @@ If there is more than one word submitted in the search, do it for each.
 Add the tf-idfs together to get the final weights to rank the results.
 
   */
-
-
 }
