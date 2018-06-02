@@ -86,7 +86,7 @@ export default function(corpus) {
       2bb) If we don't have this term/docID set, add it to the main list and set the tf = 1, df += 1, 
             CALC normalized tf,normalized df,idf,tf-idf
      2b) If the term is NOT yet in the main list AT ALL, add it and this docID, tf = 1, df = 1,
-         CALC normalized tf,df,idf,tf-idf
+         CALC normalized tf,df,idf,tf-idf CHECK
     
     */
 
@@ -94,13 +94,46 @@ export default function(corpus) {
     for (let j = 0; j < thisDocsTokens.length; j++) {
       if (invertedIndex.indexOf(thisDocsTokens[j] === -1)) {
         // the term hasn't been added to the main list yet.
-        let rawtf = 1;
-        let tf = Math.log(1 + rawtf);
-        let df = 1;
-        let idf = Math.log(N/df);
-        let tfidf = tf * idf;
-        let newelement = [thisDocsTokens[j], rawtf, tf, df, idf, tfidf];
+        const docID = i;
+        const rawtf = 1;
+        const tf = Math.log(1 + rawtf);
+        const df = 1;
+        const idf = Math.log(N/df);
+        const tfidf = tf * idf;
+        const newelement = [thisDocsTokens[j], docID, rawtf, tf, df, idf, tfidf];
           invertedIndex.push(newelement);
+      } else {
+        /* the term is already in the invertedIndex array at least once, so we need to find
+        out if it is in there with this docID yet */
+        const docID = i;
+        let found = 0;
+        for (let k = 0; k < invertedIndex.length; k++) {
+          if (invertedIndex[k][0] === thisDocsTokens[j] && invertedIndex[k][1] === docID) {
+            /* update the rawtf and computations for the record */
+            const rawtf = invertedIndex[k][2] + 1;
+            const tf = Math.log(1 + rawtf);
+            const df = 0;
+            const idf = Math.log(N/df);
+            const tfidf = tf * idf;
+            invertedIndex[k][2] = rawtf;
+            invertedIndex[k][3] = tf;
+            invertedIndex[k][4] = df;
+            invertedIndex[k][5] = idf;
+            invertedIndex[k][6] = tfidf;
+          }
+        }
+        /* if the term-docID pair wasn't found, add new element. */
+        if (found !== 1) {
+          // the term hasn't been added to the main list yet.
+          const docID = i;
+          const rawtf = 1;
+          const tf = Math.log(1 + rawtf);
+          const df = 0;
+          const idf = Math.log(N / df);
+          const tfidf = tf * idf;
+          const newelement = [thisDocsTokens[j], docID, rawtf, tf, df, idf, tfidf];
+          invertedIndex.push(newelement);
+        }
       }
     }
 
@@ -173,13 +206,13 @@ export default function(corpus) {
       normalizedtf: thisDocsTermsAndNormalizedFrequencyObj
     };
 
-    docsTokensAndTermFrequencies.push(obj);
+   // docsTokensAndTermFrequencies.push(obj);
 
     //console.log(thisDocsTermsAndFrequencyObj);
   }
 
   // we have the raw term frequencies here:
-  console.log(docsTokensAndTermFrequencies);
+  //console.log(docsTokensAndTermFrequencies);
 
   // we have the raw doc frequencies here:
   console.log(termsDocIDsAndDocFrequencies);
