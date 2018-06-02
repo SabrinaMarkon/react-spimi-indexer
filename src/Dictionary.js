@@ -94,8 +94,12 @@ export default function(corpus) {
     for (let j = 0; j < thisDocsTokens.length; j++) {
       if (invertedIndex.indexOf(thisDocsTokens[j] === -1)) {
         // the term hasn't been added to the main list yet.
-
-        let newelement = [thisDocsTokens[j]];
+        let rawtf = 1;
+        let tf = Math.log(1 + rawtf);
+        let df = 1;
+        let idf = Math.log(N/df);
+        let tfidf = tf * idf;
+        let newelement = [thisDocsTokens[j], rawtf, tf, df, idf, tfidf];
           invertedIndex.push(newelement);
       }
     }
